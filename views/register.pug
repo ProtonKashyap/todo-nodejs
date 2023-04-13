@@ -1,0 +1,12 @@
+doctype html5
+html
+  head
+    title Register
+
+  body
+    form(action='/auth/register' method='POST')
+      label Name
+        input(type='text' name='name' required placholder='Username')
+      label Password
+        input(type='password' name='password' required)
+      input(type='submit' value='Login')

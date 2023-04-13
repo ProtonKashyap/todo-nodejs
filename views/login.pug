@@ -1,0 +1,12 @@
+doctype html5
+html
+  head
+    title Login
+
+  body
+    form(action='/auth/login' method='POST')
+      label Name
+        input(type='text' name='name' required placholder='Username' )
+      label Password
+        input(type='password' name='password')
+      input(type='submit' value='Login')
