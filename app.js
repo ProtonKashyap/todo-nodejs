@@ -16,6 +16,8 @@ const app = express();
 //database configuration
 const dotenv = require("dotenv");
 const connectDB = require("./config/database");
+
+//dotenv config
 dotenv.config({ path: "./config/config.env" });
 
 connectDB();
@@ -52,11 +54,19 @@ app.use(passport.session());
 app.get("/", (req, res, next) => {
   return res.render("homePage");
 });
-app.get("/dashboard", function (req, res, next) {
-  console.log(req.user);
+
+const { checkAuthenticated } = require("./util/utilityFucntion");
+app.get("/dashboard", checkAuthenticated, function (req, res, next) {
+  console.log(req.user.name);
   return res.render("dashboard");
 });
 app.use("/auth", authRouter);
+app.get("/logout", function (req, res, next) {
+  req.logout(function (err) {
+    if (err) return next(err);
+    return res.redirect("/");
+  });
+});
 app.use(notFoundMiddleware);
 app.use(errorHanderMiddleware);
 
