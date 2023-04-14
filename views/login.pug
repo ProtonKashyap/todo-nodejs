@@ -6,7 +6,7 @@ html
   body
     form(action='/auth/login' method='POST')
       label Name
-        input(type='text' name='name' required placholder='Username' )
+        input(type='text' id="username" name='username' required placholder='Username' )
       label Password
-        input(type='password' name='password')
+        input(type='password' id='current-password' name='password')
       input(type='submit' value='Login')

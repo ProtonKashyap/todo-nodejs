@@ -1,7 +1,17 @@
 html
     head
         title Todo
-    block meta
-      meta(charset='UTF-8' name='viewport' content='width=device-width, initial-scale=1.0')
+        meta(charset='UTF-8' name='viewport' content='width=device-width, initial-scale=1.0')
+        link(rel='stylesheet', href='../public/layout.css')
     body
+      nav
+        navbar-default
+          h1 My Website
+        ul
+          li
+            a(href='/') Home
+          li
+            a(href='/auth/login') Login
+          li
+            a(href='/auth/register') Register
         block content
