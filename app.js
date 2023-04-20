@@ -8,6 +8,9 @@ const flash = require("connect-flash");
 const passport = require("passport");
 require("./config/passport-config")(passport);
 
+const connectionString =
+  "mongodb+srv://Mohit:1234@nodeexpressprojects.ji47m59.mongodb.net/?retryWrites=true&w=majority";
+
 //middlewares
 const errorHanderMiddleware = require("./middlewares/error-handler");
 const notFoundMiddleware = require("./middlewares/not-found");
@@ -30,17 +33,32 @@ app.set("views", path.join(__dirname, "views"));
 app.set("view engine", "pug");
 app.use(express.static(path.join(__dirname, "public")));
 
+const session = require("express-session");
+const MongoDBStore = require("connect-mongodb-session")(session);
+
+//setting up a session store
+const store = new MongoDBStore({
+  uri: process.env.MONGO_URI,
+  collection: "mySessions",
+  databaseName:"Todo_Nodejs"
+});
+
 //setting up a session
 app.use(
-  require("express-session")({
+  session({
     secret: "Mysecret",
     saveUninitialized: true,
     resave: false,
     cookie: {
       maxAge: 1000 * 60 * 60 * 24,
     },
+    store: store,
   })
 );
+
+store.on("error", function (error) {
+  console.log(error);
+});
 
 //Parses incoming JSON requests and puts the parsed data in req.body
 app.use(express.json());
@@ -55,10 +73,9 @@ app.get("/", (req, res, next) => {
   return res.render("homePage");
 });
 
-const { checkAuthenticated } = require("./util/utilityFucntion");
+const { checkAuthenticated } = require("./util/utilityFunctions");
 app.get("/dashboard", checkAuthenticated, function (req, res, next) {
-  console.log(req.user.name);
-  return res.render("dashboard");
+  return res.render("dashboard", { name: req.user.name });
 });
 app.use("/auth", authRouter);
 app.get("/logout", function (req, res, next) {

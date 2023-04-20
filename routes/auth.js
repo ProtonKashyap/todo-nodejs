@@ -3,7 +3,7 @@ const router = express.Router();
 const  register  = require("../controllers/auth");
 const passport = require("passport");
 
-const { checkLoggedIn } = require("../util/utilityFucntion");
+const { checkLoggedIn } = require("../util/utilityFunctions");
 
 //get requests
 router.route("/login").get(checkLoggedIn, function (req, res, next) {
