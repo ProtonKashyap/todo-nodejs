@@ -7,6 +7,13 @@ html
         a(href='/logout') LogOut |
         a(href='/todos/addTodo') AddTodo
         each todo in todos
-            li #{todo.title}
+            .todos
+                li #{todo.title}
+                a(href=`/todos/deleteTodo/${todo._id}`) Delete  |
+                a(href=`/todos/updateTodo/${todo._id}`) Mark as Completed
+                if todo.completed
+                    input(type="checkbox" checked)
+                else
+                    input(type="checkbox")
         else
             p No todos to display , please add a todo

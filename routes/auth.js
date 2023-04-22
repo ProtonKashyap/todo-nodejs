@@ -9,7 +9,7 @@ const { checkLoggedIn } = require("../util/utilityFunctions");
 router.route("/login").get(checkLoggedIn, function (req, res, next) {
   return res.render("login");
 });
-router.route("/register").get(function (req, res, next) {
+router.route("/register").get(checkLoggedIn,function (req, res, next) {
   return res.render("register");
 });
 
