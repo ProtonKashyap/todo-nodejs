@@ -8,6 +8,7 @@ const TodosSchema = new mongoose.Schema(
       ref: "Users",
       required: [true, "Please provide user"],
     },
+    completed: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

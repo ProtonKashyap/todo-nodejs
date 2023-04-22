@@ -4,12 +4,8 @@ require("express-async-errors");
 
 const express = require("express");
 const path = require("path");
-const flash = require("connect-flash");
 const passport = require("passport");
 require("./config/passport-config")(passport);
-
-const connectionString =
-  "mongodb+srv://Mohit:1234@nodeexpressprojects.ji47m59.mongodb.net/?retryWrites=true&w=majority";
 
 //middlewares
 const errorHanderMiddleware = require("./middlewares/error-handler");
@@ -40,7 +36,7 @@ const MongoDBStore = require("connect-mongodb-session")(session);
 const store = new MongoDBStore({
   uri: process.env.MONGO_URI,
   collection: "mySessions",
-  databaseName:"Todo_Nodejs"
+  databaseName: "Todo_Nodejs",
 });
 
 //setting up a session
@@ -64,7 +60,6 @@ store.on("error", function (error) {
 app.use(express.json());
 //Body Parser
 app.use(express.urlencoded({ extended: false }));
-app.use(flash());
 //setting up passportjs
 app.use(passport.initialize());
 app.use(passport.session());
@@ -73,17 +68,23 @@ app.get("/", (req, res, next) => {
   return res.render("homePage");
 });
 
+const Todo = require("./models/Todo");
 const { checkAuthenticated } = require("./util/utilityFunctions");
-app.get("/dashboard", checkAuthenticated, function (req, res, next) {
-  return res.render("dashboard", { name: req.user.name });
+app.get("/dashboard", checkAuthenticated, async function (req, res, next) {
+  const todos = await Todo.find({ createdBy: req.user._id }).sort({
+    createdAt: -1,
+  });
+  return res.render("dashboard", { name: req.user.name, todos: todos });
 });
 app.use("/auth", authRouter);
 app.get("/logout", function (req, res, next) {
-  req.logout(function (err) {
-    if (err) return next(err);
-    return res.redirect("/");
-  });
+  store.clear();
+  // req.session.destroy();
+  res.redirect("/");
 });
+
+const todosRouter = require("./routes/todos");
+app.use("/todos", checkAuthenticated, todosRouter);
 app.use(notFoundMiddleware);
 app.use(errorHanderMiddleware);
 

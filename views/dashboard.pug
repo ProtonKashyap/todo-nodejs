@@ -4,4 +4,9 @@ html
         title Dashboard
     body
         p Welcome #{name} to Dashboard
-        a(href='/logout') LogOut
+        a(href='/logout') LogOut |
+        a(href='/todos/addTodo') AddTodo
+        each todo in todos
+            li #{todo.title}
+        else
+            p No todos to display , please add a todo

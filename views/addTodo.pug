@@ -1,0 +1,10 @@
+doctype html5
+html
+  head
+    title AddTodo
+
+  body
+    form(action='/todos/addTodo' method='POST')
+      label Title
+        input(type='text' id="title" name='title' required placeholder='Todo Title' )
+      input(type='submit' value='AddTodo')
