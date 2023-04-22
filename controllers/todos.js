@@ -1,6 +1,7 @@
 const { OK } = require("http-status-codes");
 const { BadRequestError, NotFoundError } = require("../errors");
 const Todo = require("../models/Todo");
+const { compare } = require("bcryptjs");
 async function createTodo(req, res, next) {
   const { title } = req.body;
   if (!title) throw new BadRequestError("Please Provide Title");
@@ -22,8 +23,9 @@ async function updateTodo(req, res, next) {
     user: { _id: userId },
     params: { todoId },
   } = req;
-  const todo = await Todo.findByIdAndUpdate({ _id: todoId, createdBy: userId },{completed:true});
+  const todo=await Todo.findById({_id:todoId})
   if (!todo) throw new NotFoundError("Todo not found");
+  await Todo.findByIdAndUpdate({ _id: todoId, createdBy: userId },{completed:!todo.completed});
   res.redirect("/dashboard");
 }
 
