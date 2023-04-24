@@ -1,19 +1,35 @@
-doctype html5
-html
-    head
-        title Dashboard
-    body
-        p Welcome #{name} to Dashboard
-        a(href='/logout') LogOut |
-        a(href='/todos/addTodo') AddTodo
-        each todo in todos
-            .todos
-                li #{todo.title}
-                a(href=`/todos/deleteTodo/${todo._id}`) Delete  |
-                a(href=`/todos/updateTodo/${todo._id}`) Mark as Completed
-                if todo.completed
-                    input(type="checkbox" checked)
-                else
-                    input(type="checkbox")
-        else
-            p No todos to display , please add a todo
+extends ./header.pug
+block styles
+    link(rel='stylesheet', href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css")
+block scripts
+    script(src='/script.js')
+block  content
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          a.navbar-brand(href='/')
+            | TodosManager
+        ul.nav.navbar-nav
+          li
+            a(href='/') Home
+          li.active
+            a(href='/dashboard') My Todos
+        ul.nav.navbar-nav.navbar-right
+          li
+            a(href='/logout')
+              span.glyphicon.glyphicon-log-out LogOut
+    p Welcome #{name} to Dashboard
+    button(id='addtodo') AddTodo
+    //- a(href='/todos/addTodo') AddTodo
+    each todo in todos
+        .todos
+            li #{todo.title}
+            a(href=`/todos/deleteTodo/${todo._id}`) Delete  |
+            a(href=`/todos/updateTodo/${todo._id}`) Mark as Completed
+            if todo.completed
+                input(type="checkbox" checked)
+            else
+                input(type="checkbox")
+    else
+        p No todos to display , please add a todo

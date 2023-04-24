@@ -1,0 +1,18 @@
+extends ./layout.pug
+
+block content
+    h2 Sign up for our newsletter
+    div(id='newsletterSignupFormContainer')
+        form(class="form-horizontal" id='newsletterSignupForm' role="form" action="/newsletter-signup/process?form=newsletter" method="POST")
+            input(type="hidden" name="_csrf" )
+            .form-group
+                label(for="fieldName" class="col-sm-2 control-label") Name
+                .col-sm-4
+                    input(type="text" class="form-control" id="fieldName" name="name")
+            .form-group
+                label(for="fieldEmail" class="col-sm-2 control-label") Email
+                .col-sm-4
+                    input(type="email" class="form-control" required id="fieldEmail" name='email')
+            .form-group
+                div(class='col-sm-offset-2 col-sm-4')
+                    button(type='submit' class='btn btn-primary') Register

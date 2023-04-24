@@ -65,7 +65,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.get("/", (req, res, next) => {
-  return res.render("homePage");
+  return res.render("homePage",{title:"Homepage"});
 });
 
 const Todo = require("./models/Todo");
@@ -82,6 +82,9 @@ app.get("/logout", function (req, res, next) {
   // req.session.destroy();
   res.redirect("/");
 });
+app.get('/newsletter-signup',function(req,res,next){
+  return res.render('newsletter');
+})
 
 const todosRouter = require("./routes/todos");
 app.use("/todos", checkAuthenticated, todosRouter);

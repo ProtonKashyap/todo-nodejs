@@ -1,17 +1,22 @@
-html
-    head
-        title Todo
-        meta(charset='UTF-8' name='viewport' content='width=device-width, initial-scale=1.0')
-        link(rel='stylesheet', href='../public/layout.css')
-    body
-      nav
-        navbar-default
-          h1 My Website
-        ul
-          li
+extends ./header.pug
+block scripts
+    link(rel='stylesheet', href=
+"https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css")
+block content
+    nav.navbar.navbar-inverse
+      .container-fluid
+        .navbar-header
+          a.navbar-brand(href='/')
+            | TodosManager
+        ul.nav.navbar-nav
+          li.active
             a(href='/') Home
           li
-            a(href='/auth/login') Login
+            a(href='/dashboard') My Todos
+        ul.nav.navbar-nav.navbar-right
           li
-            a(href='/auth/register') Register
-        block content
+            a(href='/auth/register')
+              span.glyphicon.glyphicon-user SignUp
+          li
+            a(href='/auth/login')
+              span.glyphicon.glyphicon-log-in LogIn

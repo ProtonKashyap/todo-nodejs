@@ -1,12 +1,17 @@
-doctype html5
-html
-  head
-    title Login
+extends ./header.pug
 
-  body
+block styles
+  link(rel='stylesheet' ,href='https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css')
+
+block append content
+  main(class='form-signin w-50 m-auto')
     form(action='/auth/login' method='POST')
-      label Name
-        input(type='text' id="username" name='username' required placeholder='Username' )
-      label Password
-        input(type='password' id='current-password' name='password')
-      input(type='submit' value='Login')
+      h1(class='h3 mb-3 fw-normal') Please sign in
+      .form-floating
+        input(type='text' class='form-control' id="username" name='username' required placeholder='Username' )
+        label(for='username') Username
+      .form-floating
+        input(type='password' class='form-control' id="password" name='password' placeholder='password' required )
+        label(for='password') Password
+      button(class='w-100 btn btn-lg btn-primary' type='submit') Sign in
+      p(class='mt-5 mb-3 text-body-secondary') &copy; 2017-2023

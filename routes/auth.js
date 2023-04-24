@@ -7,10 +7,10 @@ const { checkLoggedIn } = require("../util/utilityFunctions");
 
 //get requests
 router.route("/login").get(checkLoggedIn, function (req, res, next) {
-  return res.render("login");
+  return res.render("login",{title:'Login'});
 });
 router.route("/register").get(checkLoggedIn,function (req, res, next) {
-  return res.render("register");
+  return res.render("register",{title:'Register'});
 });
 
 //post requests
