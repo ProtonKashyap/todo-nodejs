@@ -3,7 +3,7 @@ block styles
     link(rel='stylesheet', href=
 "https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css")
 block scripts
-    script(src='/script.js')
+    script(src='/scripts/script.js')
 block  content
     nav.navbar.navbar-inverse
       .container-fluid
@@ -19,17 +19,19 @@ block  content
           li
             a(href='/logout')
               span.glyphicon.glyphicon-log-out LogOut
-    p Welcome #{name} to Dashboard
-    button(id='addtodo') AddTodo
-    //- a(href='/todos/addTodo') AddTodo
-    each todo in todos
-        .todos
-            li #{todo.title}
-            a(href=`/todos/deleteTodo/${todo._id}`) Delete  |
-            a(href=`/todos/updateTodo/${todo._id}`) Mark as Completed
-            if todo.completed
-                input(type="checkbox" checked)
-            else
-                input(type="checkbox")
-    else
-        p No todos to display , please add a todo
+    h1 Welcome #{name} to Dashboard
+    button(type='button' id='addtodo' class='btn btn-primary' ) AddTodo
+    ol
+        each todo in todos
+            .todos.container-fluid
+                    li #{todo.title}
+                    a(href=`/todos/deleteTodo/${todo._id}`)
+                        span.glyphicon.glyphicon-trash DeleteTodo |
+                    if todo.completed
+                        a(href=`/todos/updateTodo/${todo._id}`) Mark as Incomplete
+                        input(type="checkbox" checked)
+                    else
+                        a(href=`/todos/updateTodo/${todo._id}`) Mark as Complete
+                        input(type="checkbox")
+        else
+         p No todos to display , please add a todo
