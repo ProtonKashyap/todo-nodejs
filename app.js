@@ -17,7 +17,7 @@ const dotenv = require("dotenv");
 const connectDB = require("./config/database");
 
 //dotenv config
-dotenv.config({ path: "./config/config.env" });
+dotenv.config({ path: "./.env" });
 
 connectDB();
 
